@@ -1,1 +1,0 @@
-# MISW-4103-Pruebas-Automatizadas
