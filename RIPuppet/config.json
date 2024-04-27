@@ -1,0 +1,13 @@
+{
+    "url": "http://localhost:2368/ghost/",
+    "headless": true,
+    "depthLevels": 1,
+    "inputValues": false,
+    "sessionCookie":"s%3AuzetaDMQB3ySHK_o4rjlu5Xi_553mI9I.tAFowDRKx%2BT8M0Ytw91%2Bl2X691vbcqXx2FuXq8nIPDk",
+    "values": {"userInput": "Mario",
+        "passwordInput": "123456",
+        "passwordTwoInput": "123456",
+        "nameInput": "Mario",
+        "emailInput": "mario@b.com"},
+    "browsers": ["chromium", "webkit", "firefox"]
+}
