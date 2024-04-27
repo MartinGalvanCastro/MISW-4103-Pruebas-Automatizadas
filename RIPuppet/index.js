@@ -69,7 +69,7 @@ console.log(inputValues);
         cookies: [
           {
             name: "ghost-admin-api-session",
-            value:sessionCookie,
+            value:sessionCookie ,
             domain: "localhost",
             path: "/ghost",
           },
@@ -138,6 +138,7 @@ async function scrapLinks(page) {
  * @param {*} parentState Represents the previous node in the tree
  */
 async function recursiveExploration(page, link, depth, parentState) {
+  if(!link.startsWith(baseUrl)) return;
   console.log("Depth Level: " + depth + " in " + link);
   if (depth > depthLevels) {
     console.log("Depth levels reached. Exploration stopped");
@@ -187,7 +188,7 @@ async function recursiveExploration(page, link, depth, parentState) {
     //Explore the current page
     console.log("Visiting: " + link);
     console.log("Children pages: ");
-    const links = await scrapLinks(page);
+    const links = (await scrapLinks(page)).filter((link) => link.startsWith(baseUrl));
     console.log(links);
 
     visitedPages.set(link, {
@@ -195,7 +196,7 @@ async function recursiveExploration(page, link, depth, parentState) {
       children: links,
     });
 
-    if (link.includes(baseUrl)) {
+    if (link.startsWith(baseUrl)) {
       //Only explore pages of the specified domain
       let elementList = [];
       //Fill the element list with DOM elements that provide interactions
@@ -448,6 +449,8 @@ async function interactWithObject(
   console.log(await object.element.getAttribute("class"));
   if (object.type === "input") {
     let elementHandle = object.element;
+    const bannedIds = [':r1:']
+    if(bannedIds.includes(await elementHandle.getAttribute("id"))) return;
     let location = await getCoordinates(elementHandle, page);
     if (
       location.x !== 0 &&
@@ -483,7 +486,7 @@ async function interactWithObject(
     }
   } else if (object.type === "button") {
     let elementHandle = object.element;
-    const bannedClasses = ["gh-nav-btn-search", "mr2"];
+    const bannedClasses = ["gh-nav-btn-search", "mr2","gh-editor-feature-image-unsplash","gh-editor-feature-image-add-button"];
     if (bannedClasses.includes(await elementHandle.getAttribute("class"))) {
       return;
     }
@@ -530,8 +533,11 @@ async function interactWithObject(
             target: thisState,
             interaction: "button-click",
           };
-          enlaces.push(enlace);
-          nodos.push(nodo);
+          if(link.startsWith(baseUrl)){
+            enlaces.push(enlace);
+            nodos.push(nodo);
+          }
+          
           //Taking screenshot
           let imagePath = screenshots_directory + "/" + thisState + ".png";
           await page.screenshot({ path: imagePath, fullPage: true });
@@ -729,6 +735,8 @@ async function fillInput(elementHandle, page) {
     return el.type;
   }, elementHandle);
   if (type === "text") {
+    console.log('---------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+    console.log(await elementHandle.getAttribute("class"))
     elementHandle.click();
     page.keyboard.type(faker.random.words());
   } else if (type === "search") {
