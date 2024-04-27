@@ -15,3 +15,7 @@ Version Modificada de RIPuppet para correr sobre Ghost
 ```bash
 yarn start #npm run start 
 ```
+5. Si hay un error al ejecutar el comando, puede ser por que se necesite algunas cosas de PlayWright, corra el siguiente comando:
+```bash
+yarn playwright install  # npx playwright install
+```
