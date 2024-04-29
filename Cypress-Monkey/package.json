@@ -1,0 +1,28 @@
+{
+  "name": "monkey",
+  "version": "1.0.0",
+  "description": "Random and smart monkey testing tool for web apps",
+  "main": "index.js",
+  "scripts": {
+    "monkey": "npx cypress run --config-file ./monkey-config.json --headed",
+    "smart-monkey": "npx cypress run --config-file ./smart-monkey-config.json --headed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheSoftwareDesignLab/monkey-cypress"
+  },
+  "author": "jespitiaa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheSoftwareDesignLab/monkey-cypress/issues"
+  },
+  "homepage": "https://github.com/TheSoftwareDesignLab/monkey-cypress#readme",
+  "devDependencies": {
+    "cypress-log-to-output": "^1.0.8",
+    "cypress-plugin-tab": "^1.0.5"
+  },
+  "dependencies": {
+    "cypress": "4.12.1",
+    "faker": "^4.1.0"
+  }
+}
